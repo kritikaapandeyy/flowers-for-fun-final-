@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function App() {
   const [flower1, setFlower1] = useState("")
@@ -10,6 +9,27 @@ export default function App() {
   const [pollinationResult, setPollinationResult] = useState("Select two flowers and watch the magic happen! 🌟")
   const [currentQuote, setCurrentQuote] = useState("Click the button below for some flower-powered fun! 🌈")
   const [isBloomed, setIsBloomed] = useState(false)
+
+  useEffect(() => {
+    const style = document.createElement("style")
+    style.textContent = `
+      @keyframes sparkle {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-50px) scale(0);
+          opacity: 0;
+        }
+      }
+    `
+    document.head.appendChild(style)
+
+    return () => {
+      document.head.removeChild(style)
+    }
+  }, [])
 
   const flowers = ["Rose", "Sunflower", "Lavender", "Daisy", "Marigold", "Hydrangea"]
 
@@ -542,19 +562,6 @@ export default function App() {
           </div>
         </section>
       </div>
-
-      <style jsx>{`
-        @keyframes sparkle {
-          0% {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-50px) scale(0);
-            opacity: 0;
-          }
-        }
-      `}</style>
     </div>
   )
 }
